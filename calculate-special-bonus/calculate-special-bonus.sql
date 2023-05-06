@@ -1,11 +1,11 @@
 # Write your MySQL query statement below
-select employee_id,salary as bonus
+select employee_id, 
+case 
+when employee_id%2>0 and name not like "M%" then salary
+else 0
+end
+as bonus
 from Employees
-where mod(employee_id,2)>0 and name not like "M%"
+order by employee_id
 
-union
 
-select employee_id, 0 as bonus
-from Employees
-where mod(employee_id,2)=0 or name like "M%"
-order by employee_id;
