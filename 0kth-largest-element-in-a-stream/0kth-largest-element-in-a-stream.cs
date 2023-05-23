@@ -8,13 +8,7 @@ public class KthLargest {
         K = k;
 
         for(int i=0;i<nums.Length;i++){
-            if(pq.Count<k){
-                pq.Enqueue(nums[i],nums[i]);
-            }
-            else if(pq.Peek()<nums[i]){
-                pq.Dequeue();
-                pq.Enqueue(nums[i],nums[i]);
-            }
+            Add(nums[i]);
         }
     }
     
