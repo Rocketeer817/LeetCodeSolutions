@@ -18,7 +18,7 @@ public class Solution {
 
     public int Bfs(int[][] grid){
         int n = grid.Length;
-        if(grid[0][0]!=0){
+        if(grid[0][0]!=0 || grid[n-1][n-1]!=0){
             return -1;
         }
         Queue<int[]> q = new Queue<int[]>();
