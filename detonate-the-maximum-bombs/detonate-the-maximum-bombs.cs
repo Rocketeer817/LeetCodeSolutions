@@ -8,7 +8,6 @@ public class Solution {
 
         return max;
 
-
     }
 
     public int bfs(int[][] bombs , int x, int y, int r,int index){
@@ -27,21 +26,6 @@ public class Solution {
             int cx = temp[0], cy = temp[1], cr = temp[2];
             
             int lx = cx-cr, ly = cy+cr;
-
-            /*
-            for(int i = cx-cr;i<=cx+cr;i++){
-                for(int j = cy-cr;j<=cy+cr;j++){
-                    if(WithinRange(i,j,cx,cy,cr) && !(hsx.Contains(i) && hsy.Contains(y)) ){
-                        int index = FindBomb(i,j,bombs);
-                        if(index>=0){
-                            q.Enqueue(bombs[index]);
-                            hsx.Add(i);
-                            hsy.Add(j);
-                            count++;
-                        }
-                    }
-                }
-            }*/
 
             for(int i=0;i<bombs.Length;i++){
                 int nx = bombs[i][0], ny = bombs[i][1];
@@ -62,17 +46,5 @@ public class Solution {
 
         return dis<=rSq;
     }
-
-    public int FindBomb(int x, int y,int[][] bombs){
-        
-        for(int i=0;i<bombs.Length;i++){
-            if(x==bombs[i][0] && y==bombs[i][1]){
-                return i;
-            }
-        }
-
-        return -1;
-    }
-
 
 }
