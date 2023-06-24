@@ -8,58 +8,35 @@ class Solution {
         int n = rods.length;
 
         Map<Integer,Integer> dp = new HashMap<Integer,Integer>();
+        dp.put(0,0);
 
-        int[] firstHalf = new int[n/2];
+        for(int r : rods){
+            
+            Map<Integer,Integer> newDp = new HashMap<>(dp);
 
-        for(int i=0;i<n/2;i++){
-            firstHalf[i] = rods[i];
-        }
+            for(Map.Entry<Integer,Integer> entry : dp.entrySet()){
+                int diff = entry.getKey();
+                int taller = entry.getValue();
+                int shorter = taller - diff;
 
-        bottomup(firstHalf, n/2, 0, 0, 0, dp);
+                int newTaller = newDp.getOrDefault(diff+r,0);
+                newDp.put(diff+r, Math.max(newTaller,taller+r));
 
-        Map<Integer,Integer> dp1 = new HashMap<Integer,Integer>();
-
-        int[] secondHalf = new int[n-n/2];
-
-        for(int i=n/2;i<n;i++){
-            secondHalf[i-n/2] = rods[i];
-        }        
-
-        bottomup(secondHalf, n - n/2, 0, 0, 0, dp1);
-
-        int ans = 0;
-
-        for(int x : dp.keySet()){
-            int y = 0 - x;
-            if(dp1.containsKey(y)){
-                ans = Math.max(ans, dp.get(x)+dp1.get(y));
+                int newDiff = Math.abs(shorter + r - taller);
+                newTaller = Math.max(shorter+r , taller);
+                newDp.put(newDiff, Math.max(newTaller, newDp.getOrDefault(newDiff,0)));
             }
+
+            dp = newDp;
         }
 
-        return ans;
+        
+        return dp.getOrDefault(0,0);
+
+        
 
     }
 
 
-    public void bottomup( int[] rods, int n, int index ,int set1, int set2,Map<Integer,Integer> dp){
-        //System.out.println(index + "\t" + set1 + "\t" +set2);
-        if(index>=n){
-            
-            
-            int h = Math.max(dp.getOrDefault(set1-set2,0),set1);
-            dp.put(set1-set2,h);
-
-            return;
-            
-        }
-
-        //System.out.println(index + "\t" + set1 + "\t" +set2);
-
-        bottomup(rods,n,index+1,set1,set2,dp);
-
-        bottomup(rods,n,index+1,set1+rods[index],set2,dp);
-
-        bottomup(rods,n,index+1,set1,set2+rods[index],dp);
-
-    }
+    
 }
