@@ -9,48 +9,43 @@ class Solution {
             list.get(prerequisites[i][0]).add(prerequisites[i][1]);
         }
 
-        boolean[] noLoop = new boolean[numCourses];
+        boolean[] vis = new boolean[numCourses];
+        Arrays.fill(vis,false);
 
         for(int i=0;i<numCourses;i++){
-            boolean[] vis = new boolean[numCourses];
-            Arrays.fill(vis,false);
             boolean[] inStack = new boolean[numCourses];
             Arrays.fill(inStack,false);
-            if(dfs(list,i,vis,inStack,noLoop)==false){
+            if(dfs(list,i,vis,inStack)==false){
                 return false;
             }
-
-            noLoop[i] = true;
 
         }
 
         return true;
     }
 
-    public boolean dfs(List<Set<Integer>> graph,int idx,boolean[] vis,boolean[] inStack,boolean[] noLoop){
+    public boolean dfs(List<Set<Integer>> graph,int idx,boolean[] vis,boolean[] inStack){
         if(inStack[idx]==true){
             return false;
         }
 
-        if(noLoop[idx] == true){
+        if(vis[idx] == true){
             return true;
         }
 
         vis[idx] = true;
-        
+
         inStack[idx] = true;
 
         for(int i : graph.get(idx)){
             
-            if(dfs(graph,i,vis,inStack,noLoop) == false){
+            if(dfs(graph,i,vis,inStack) == false){
                 return false;
             }   
             
         }
 
         inStack[idx] = false;
-
-        noLoop[idx] = true;
 
         return true;
     }
