@@ -18,22 +18,25 @@ class Solution {
     public List<Integer> inorderTraversal(TreeNode root) {
         List<Integer> ans = new ArrayList<>();
 
-        inOrder(root,ans);
+        LinkedList<TreeNode> stack = new LinkedList<>();
+
+        TreeNode ptr = root;
+
+        while(ptr!=null || stack.size()>0){
+            if(ptr==null){
+                ptr = stack.pollLast();
+                ans.add(ptr.val);
+
+                ptr = ptr.right;
+            }
+            else{
+                stack.addLast(ptr);
+                ptr = ptr.left;
+            }            
+        }
 
         return ans;
     }
 
-    public void inOrder(TreeNode root, List<Integer> ans){
-        if(root == null){
-            return;
-        }
-
-        inOrder(root.left,ans);
-
-        ans.add(root.val);
-
-        inOrder(root.right,ans);
-
-        
-    }
+    
 }
